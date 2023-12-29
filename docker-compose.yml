@@ -1,0 +1,46 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    command: mysqld --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_DATABASE_NAME=test_db
+      - MYSQL_USER_NAME=test
+      - MYSQL_ROOT_PASSWORD=test
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_volume:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    restart: always
+    environment:
+      - SECRET_KEY=django-insecure-v5tu46^t(v-&luo)i%k^68+fyx$-j7_v^4+$3m-!%$0do5i-4e
+      - DEBUG=True
+    depends_on:
+      - db
+    entrypoint: /entrypoint.sh
+    volumes:
+      - staticfiles:/backend/staticfiles
+
+  nginx:
+    build:
+      context: .
+      dockerfile: ./webserver/Dockerfile
+    restart: always
+    volumes:
+      - staticfiles:/staticfiles
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql_volume:
+  staticfiles:
