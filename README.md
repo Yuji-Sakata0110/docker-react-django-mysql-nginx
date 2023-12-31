@@ -3,6 +3,7 @@
 # frontend
 
 react hot reload 機能実装済み。
+現状 HotReload は frontend コンテナでのみ、HotReload を可能。nginx では、ビルドした静的ファイルのみをコンテナに配置しているため、フロントでの開発は frontend コンテナを利用する。
 
 # backend
 
