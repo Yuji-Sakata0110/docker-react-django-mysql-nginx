@@ -1,4 +1,4 @@
-FROM node:latest as build
+FROM node:16-slim as build
 
 WORKDIR /frontend
 COPY ./frontend/package.json ./

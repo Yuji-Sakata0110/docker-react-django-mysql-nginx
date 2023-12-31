@@ -2,7 +2,7 @@
 
 # frontend
 
-react hot reload 機能未実装。
+react hot reload 機能実装済み。
 
 # backend
 
